@@ -1,9 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import ChatList from './ChatList';
-import ChatForm from './ChatForm';
+import './App.css';
+import Axios from 'axios';
+import Chatlist from './ChatList';
+import ChatForm from './ChatForm'
 import qs from 'qs';
-
 class App extends React.Component {
 
   constructor(props) {
@@ -13,24 +13,24 @@ class App extends React.Component {
       text: ''
     };
   }
-
   componentDidMount() {
 
-    setInterval(async () => {
-      const {data} = await axios.get('/api');
+    setInterval(async() => {
+
+      const {data} = await Axios.get('/api');
       // console.log(data);
       this.setState({
         messages: data
-      });
-    }, 2000);
-
-  }
+        });
+      }, 2000);
+    }
 
   render() {
-    return (
+
+    return(
       <div className="App">
-        <h1>Chat App</h1>
-        <ChatList messages={this.state.messages}/>
+        <h1>Chatapp</h1>
+        <Chatlist messages={this.state.messages}/>
         <ChatForm 
           text={this.state.text}
           handleChange={this._setText}
@@ -38,32 +38,29 @@ class App extends React.Component {
         />
       </div>
     );
-  }
-
+  } 
   _setText = (text) => {
-    console.log('App _setText got called');
+    console.log('app _setText');
     this.setState({
       text
     });
   }
-
-  _sendMessage = async () => {    
-    console.log('App _sendMessage got called');
-    await axios({
+  _sendMessage = async () => {
+    console.log('app _sendMessage');
+    await Axios({
       method: 'post',
       url: '/api',
-      data: qs.stringify({
+      data: qs.stringify ({
         message: this.state.text
-      }), 
+      }),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
     this.setState({
       text: ''
-    })
+    });
   }
 }
-
 
 export default App;
