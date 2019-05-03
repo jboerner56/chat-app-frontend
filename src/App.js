@@ -14,15 +14,29 @@ class App extends React.Component {
     };
   }
   componentDidMount() {
+    const url = 'ws://localhost:3000/chat'; // cant use create react app proxy bc of a bug
+    this.connection = new WebSocket(url);
 
-    setInterval(async() => {
-
-      const {data} = await Axios.get('/api');
-      // console.log(data);
-      this.setState({
-        messages: data
+    this.connection.onmessage = (e) => {
+      console.log(e.data);
+      if(this.state.messages.length === 0) {
+        this.setState({
+          messages: JSON.parse(e.data) 
+        })
+      } else {
+        this.setState({
+          messages: [...this.state.messages, JSON.parse(e.data)]
         });
-      }, 2000);
+      }
+    };
+    // setInterval(async() => {
+
+    //   const {data} = await Axios.get('/api');
+    //   // console.log(data);
+    //   this.setState({
+    //     messages: data
+    //     });
+    //   }, 2000);
     }
 
   render() {
