@@ -6,9 +6,8 @@ function Chatlist({messages}) {
     ));
     return(
         <ul>
-            <li>
                 {messageItems}
-            </li>
+
         </ul>
     );
 }

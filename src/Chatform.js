@@ -3,17 +3,22 @@ import React from 'react';
 function ChatForm({text, handleChange, handleSend}) {
     return (
         <form
-        onSubmit={handleSend}
+        onSubmit={(e) => {
+            e.preventDefault();
+            handleSend();
+        }}
         >
             <input
                 value={text}
-                onChange={handleChange}
+                onChange={(e) => {
+                    handleChange(e.target.value);
+                }}
             />
-            <button
-            onClick={handleSend}
-            >Submit</button>
+            <button>Submit</button>
         </form>
     );
 }
 
-export default Chatform;
+export default ChatForm;
+
+
