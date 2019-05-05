@@ -70,16 +70,19 @@ class App extends React.Component {
   }
   _sendMessage = async () => {
     console.log('app _sendMessage');
-    await Axios({
-      method: 'post',
-      url: '/api',
-      data: qs.stringify ({
-        message: this.state.text
-      }),
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    });
+    this.connection.send(JSON.stringify({
+      message: this.state.text
+    }));
+    // await Axios({
+    //   method: 'post',
+    //   url: '/api',
+    //   data: qs.stringify ({
+    //     message: this.state.text
+    //   }),
+    //   headers: {
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    //   }
+    // });
     this.setState({
       text: ''
     });
